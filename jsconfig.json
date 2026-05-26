@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "jsx": "react-jsx",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "checkJs": false
+  },
+  "include": ["src/**/*.js", "src/**/*.jsx", "vite.config.js", "eslint.config.js"],
+  "exclude": ["node_modules", "dist", ".output", ".vinxi"]
+}
