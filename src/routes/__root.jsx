@@ -1,4 +1,4 @@
-const _jsxFileName = "";import {jsxDEV as _jsxDEV} from "react/jsx-dev-runtime";import { QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
   Link,
@@ -9,28 +9,27 @@ import {
 } from "@tanstack/react-router";
 import { DetoxRouteGuard } from "@/components/DetoxRouteGuard";
 import { PwaRegister } from "@/components/PwaRegister";
-
 import appCss from "../styles.css?url";
 
 function NotFoundComponent() {
   return (
-    _jsxDEV('div', { className: "flex min-h-screen items-center justify-center bg-background px-4"     , children: 
-      _jsxDEV('div', { className: "max-w-md text-center" , children: [
-        _jsxDEV('h1', { className: "text-7xl font-bold text-foreground"  , children: "404"}, void 0, false, {fileName: _jsxFileName, lineNumber: 17}, this)
-        , _jsxDEV('h2', { className: "mt-4 text-xl font-semibold text-foreground"   , children: "Page not found"  }, void 0, false, {fileName: _jsxFileName, lineNumber: 18}, this)
-        , _jsxDEV('p', { className: "mt-2 text-sm text-muted-foreground"  , children: "The page you're looking for doesn't exist or has been moved."
-
-        }, void 0, false, {fileName: _jsxFileName, lineNumber: 19}, this)
-        , _jsxDEV('div', { className: "mt-6", children: 
-          _jsxDEV(Link, {
-            to: "/",
-            className: "inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"           ,
- children: "Go home"
-
-          }, void 0, false, {fileName: _jsxFileName, lineNumber: 23}, this)
-        }, void 0, false, {fileName: _jsxFileName, lineNumber: 22}, this)
-      ]}, void 0, true, {fileName: _jsxFileName, lineNumber: 16}, this)
-    }, void 0, false, {fileName: _jsxFileName, lineNumber: 15}, this)
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+      <div className="max-w-md text-center">
+        <h1 className="text-7xl font-bold text-foreground">404</h1>
+        <h2 className="mt-4 text-xl font-semibold text-foreground">Página no encontrada</h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          La página que buscas no existe o fue movida.
+        </p>
+        <div className="mt-6">
+          <Link
+            to="/"
+            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+          >
+            Ir al inicio
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -39,33 +38,32 @@ function ErrorComponent({ error, reset }) {
   const router = useRouter();
 
   return (
-    _jsxDEV('div', { className: "flex min-h-screen items-center justify-center bg-background px-4"     , children: 
-      _jsxDEV('div', { className: "max-w-md text-center" , children: [
-        _jsxDEV('h1', { className: "text-xl font-semibold tracking-tight text-foreground"   , children: "This page didn't load"
-
-        }, void 0, false, {fileName: _jsxFileName, lineNumber: 42}, this)
-        , _jsxDEV('p', { className: "mt-2 text-sm text-muted-foreground"  , children: "Something went wrong on our end. You can try refreshing or head back home."
-
-        }, void 0, false, {fileName: _jsxFileName, lineNumber: 45}, this)
-        , _jsxDEV('div', { className: "mt-6 flex flex-wrap justify-center gap-2"    , children: [
-          _jsxDEV('button', {
-            onClick: () => {
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+      <div className="max-w-md text-center">
+        <h1 className="text-xl font-semibold tracking-tight text-foreground">Esta página no cargó</h1>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Algo falló al renderizar. Prueba refrescar o vuelve al inicio.
+        </p>
+        <div className="mt-6 flex flex-wrap justify-center gap-2">
+          <button
+            type="button"
+            onClick={() => {
               router.invalidate();
               reset();
-            },
-            className: "inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"           ,
- children: "Try again"
-
-          }, void 0, false, {fileName: _jsxFileName, lineNumber: 49}, this)
-          , _jsxDEV('a', {
-            href: "/",
-            className: "inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"             ,
- children: "Go home"
-
-          }, void 0, false, {fileName: _jsxFileName, lineNumber: 58}, this)
-        ]}, void 0, true, {fileName: _jsxFileName, lineNumber: 48}, this)
-      ]}, void 0, true, {fileName: _jsxFileName, lineNumber: 41}, this)
-    }, void 0, false, {fileName: _jsxFileName, lineNumber: 40}, this)
+            }}
+            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+          >
+            Reintentar
+          </button>
+          <a
+            href="/"
+            className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
+          >
+            Ir al inicio
+          </a>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -89,7 +87,10 @@ export const Route = createRootRouteWithContext()({
       { rel: "manifest", href: "/manifest.webmanifest" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap",
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -100,15 +101,15 @@ export const Route = createRootRouteWithContext()({
 
 function RootShell({ children }) {
   return (
-    _jsxDEV('html', { lang: "es", children: [
-      _jsxDEV('head', { children: 
-        _jsxDEV(HeadContent, {}, void 0, false, {fileName: _jsxFileName, lineNumber: 95}, this )
-      }, void 0, false, {fileName: _jsxFileName, lineNumber: 94}, this)
-      , _jsxDEV('body', { children: [
-        children
-        , _jsxDEV(Scripts, {}, void 0, false, {fileName: _jsxFileName, lineNumber: 99}, this )
-      ]}, void 0, true, {fileName: _jsxFileName, lineNumber: 97}, this)
-    ]}, void 0, true, {fileName: _jsxFileName, lineNumber: 93}, this)
+    <html lang="es">
+      <head>
+        <HeadContent />
+      </head>
+      <body>
+        {children}
+        <Scripts />
+      </body>
+    </html>
   );
 }
 
@@ -116,10 +117,10 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
-    _jsxDEV(QueryClientProvider, { client: queryClient, children: [
-      _jsxDEV(PwaRegister, {}, void 0, false, {fileName: _jsxFileName, lineNumber: 110}, this ),
-      _jsxDEV(DetoxRouteGuard, {}, void 0, false, {fileName: _jsxFileName, lineNumber: 111}, this ),
-      _jsxDEV(Outlet, {}, void 0, false, {fileName: _jsxFileName, lineNumber: 112}, this )
-    ]}, void 0, true, {fileName: _jsxFileName, lineNumber: 109}, this)
+    <QueryClientProvider client={queryClient}>
+      <PwaRegister />
+      <DetoxRouteGuard />
+      <Outlet />
+    </QueryClientProvider>
   );
 }
