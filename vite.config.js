@@ -1,6 +1,9 @@
 import fs from "node:fs";
 import path from "node:path";
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+import { nitro } from "nitro/vite";
+
+const isVercel = !!process.env.VERCEL;
 
 const ROUTE_TREE = path.resolve("src/routeTree.gen.js");
 
@@ -44,10 +47,19 @@ function copyPublicToClient() {
       order: "post",
       handler() {
         const publicDir = path.resolve("public");
-        const outDir = path.resolve("dist/client");
-        if (!fs.existsSync(publicDir) || !fs.existsSync(outDir)) return;
-        for (const file of fs.readdirSync(publicDir)) {
-          fs.copyFileSync(path.join(publicDir, file), path.join(outDir, file));
+        if (!fs.existsSync(publicDir)) return;
+
+        const outDirs = [path.resolve("dist/client")];
+        for (const dir of [".output/public", ".vercel/output/static"]) {
+          const resolved = path.resolve(dir);
+          if (fs.existsSync(resolved)) outDirs.push(resolved);
+        }
+
+        for (const outDir of outDirs) {
+          if (!fs.existsSync(outDir)) continue;
+          for (const file of fs.readdirSync(publicDir)) {
+            fs.copyFileSync(path.join(publicDir, file), path.join(outDir, file));
+          }
         }
       },
     },
@@ -55,6 +67,7 @@ function copyPublicToClient() {
 }
 
 export default defineConfig({
+  cloudflare: isVercel ? false : undefined,
   environments: {
     client: {
       build: {
@@ -62,7 +75,7 @@ export default defineConfig({
       },
     },
   },
-  plugins: [stripRouteTreeTypes(), copyPublicToClient()],
+  plugins: [stripRouteTreeTypes(), copyPublicToClient(), ...(isVercel ? [nitro()] : [])],
   tanstackStart: {
     server: { entry: "server" },
     router: {
