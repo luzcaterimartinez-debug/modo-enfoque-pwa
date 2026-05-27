@@ -36,39 +36,61 @@ function migrate(parsed) {
   };
 }
 
+let cachedRaw = null;
+let cachedState = DEFAULT;
+
+function buildState(parsed) {
+  return {
+    ...DEFAULT,
+    ...parsed,
+    completedChallenges: parsed.completedChallenges ?? [],
+    activeDetox: parsed.activeDetox ?? null,
+    dailyMinutes: parsed.dailyMinutes ?? {},
+    dailyBlocks: parsed.dailyBlocks ?? {},
+  };
+}
+
 function read() {
   if (typeof window === "undefined") return DEFAULT;
   try {
     const raw = localStorage.getItem(KEY) || localStorage.getItem("enfoque-store-v1");
-    if (!raw) return DEFAULT;
-    const parsed = migrate(JSON.parse(raw));
-    return {
-      ...DEFAULT,
-      ...parsed,
-      completedChallenges: parsed.completedChallenges ?? [],
-      activeDetox: parsed.activeDetox ?? null,
-      dailyMinutes: parsed.dailyMinutes ?? {},
-      dailyBlocks: parsed.dailyBlocks ?? {},
-    };
+    if (!raw) {
+      cachedRaw = "";
+      cachedState = DEFAULT;
+      return DEFAULT;
+    }
+    if (raw === cachedRaw) return cachedState;
+    cachedRaw = raw;
+    cachedState = buildState(migrate(JSON.parse(raw)));
+    return cachedState;
   } catch {
+    cachedRaw = null;
+    cachedState = DEFAULT;
     return DEFAULT;
   }
 }
 
 function write(s) {
-  if (typeof window !== "undefined") {
-    localStorage.setItem(KEY, JSON.stringify(s));
-    localStorage.removeItem("enfoque-store-v1");
-  }
+  if (typeof window === "undefined") return;
+  const raw = JSON.stringify(s);
+  if (raw === cachedRaw) return;
+  localStorage.setItem(KEY, raw);
+  localStorage.removeItem("enfoque-store-v1");
+  cachedRaw = raw;
+  cachedState = s;
   window.dispatchEvent(new CustomEvent("enfoque-store"));
 }
 
 function subscribe(callback) {
+  const onExternalStorage = () => {
+    cachedRaw = null;
+    callback();
+  };
   window.addEventListener("enfoque-store", callback);
-  window.addEventListener("storage", callback);
+  window.addEventListener("storage", onExternalStorage);
   return () => {
     window.removeEventListener("enfoque-store", callback);
-    window.removeEventListener("storage", callback);
+    window.removeEventListener("storage", onExternalStorage);
   };
 }
 

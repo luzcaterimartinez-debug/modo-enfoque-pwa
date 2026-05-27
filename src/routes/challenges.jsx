@@ -33,7 +33,7 @@ export const Route = createFileRoute("/challenges")({
 });
 
 function ChallengesPage() {
-  const [store, update] = useStore();
+  const [store] = useStore();
   const [category, setCategory] = useState("all");
   const [confirmId, setConfirmId] = useState(null);
   const [confirmReady, setConfirmReady] = useState(false);
@@ -53,9 +53,8 @@ function ChallengesPage() {
     const result = finishExpiredDetox();
     if (result?.ok) {
       setToast(`¡Reto completado! +${result.points} pts`);
-      update({});
     }
-  }, [now, update]);
+  }, [now]);
 
   useEffect(() => {
     if (!store.activeDetox || paused) return;
@@ -69,13 +68,12 @@ function ChallengesPage() {
     if (pageVisible || wasVisible || !store.activeDetox || store.activeDetox.paused) return;
 
     const result = recordDetoxViolation();
-    update({});
     if (result.failed) {
       setFailMsg("Reto fallido: saliste de la app demasiadas veces.");
     } else {
       setToast(`Reto pausado (${result.violations}/${MAX_DETOX_VIOLATIONS} avisos)`);
     }
-  }, [pageVisible, store.activeDetox, update]);
+  }, [pageVisible, store.activeDetox]);
 
   useEffect(() => {
     if (!toast && !failMsg) return;
@@ -114,7 +112,6 @@ function ChallengesPage() {
   const startTimer = (c) => {
     if (!c.durationSec || isChallengeDoneToday(c.id, store)) return;
     startDetoxChallenge(c.id, c.durationSec);
-    update({});
   };
 
   const confirmInstant = (c) => {
@@ -122,20 +119,17 @@ function ChallengesPage() {
     const result = completeChallenge(c.id, c.points, c.durationSec || 0);
     if (result.ok) {
       setToast(`¡Reto completado! +${result.points} pts`);
-      update({});
     }
     setConfirmId(null);
   };
 
   const cancelActive = () => {
     cancelDetoxChallenge();
-    update({});
     setToast("Reto cancelado — sin puntos.");
   };
 
   const resumeActive = () => {
     resumeDetoxChallenge();
-    update({});
     setNow(Date.now());
   };
 
