@@ -172,7 +172,7 @@ export function getChallenge(id) {
 }
 
 export function getDailyChallenge() {
-  const day = new Date().getDate();
+  const day = new Date().getUTCDate();
   return CHALLENGES[day % CHALLENGES.length];
 }
 

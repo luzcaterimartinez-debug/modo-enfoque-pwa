@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useSyncExternalStore } from "react";
 import { Flame, Leaf, Trophy } from "lucide-react";
 import { getChallenge, getDailyChallenge } from "@/lib/challenges";
 
@@ -63,26 +63,23 @@ function write(s) {
   window.dispatchEvent(new CustomEvent("enfoque-store"));
 }
 
+function subscribe(callback) {
+  window.addEventListener("enfoque-store", callback);
+  window.addEventListener("storage", callback);
+  return () => {
+    window.removeEventListener("enfoque-store", callback);
+    window.removeEventListener("storage", callback);
+  };
+}
+
 export function useStore() {
-  const [state, setState] = useState(DEFAULT);
+  const state = useSyncExternalStore(subscribe, read, () => DEFAULT);
 
-  useEffect(() => {
-    setState(read());
-    const sync = () => setState(read());
-    window.addEventListener("enfoque-store", sync);
-    window.addEventListener("storage", sync);
-    return () => {
-      window.removeEventListener("enfoque-store", sync);
-      window.removeEventListener("storage", sync);
-    };
-  }, []);
-
-  const update = (patch) => {
+  const update = useCallback((patch) => {
     const cur = read();
     const next = { ...cur, ...(typeof patch === "function" ? patch(cur) : patch) };
     write(next);
-    setState(next);
-  };
+  }, []);
 
   return [state, update];
 }

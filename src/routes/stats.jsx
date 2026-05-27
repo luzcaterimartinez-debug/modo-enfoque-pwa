@@ -3,6 +3,7 @@ import { Shell } from "@/components/Shell";
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line, Tooltip, PieChart, Pie, Cell } from "recharts";
 import { BookOpen, Ban, Droplets, Brain } from "lucide-react";
 import { useStore } from "@/lib/store";
+import { useHydrated } from "@/hooks/use-hydrated";
 import {
   getWeeklyMinutesChart,
   getWeeklyTrend,
@@ -28,6 +29,7 @@ const HABIT_ICONS = [BookOpen, Ban, Droplets, Brain];
 
 function StatsPage() {
   const [store] = useStore();
+  const hydrated = useHydrated();
   const weekly = getWeeklyMinutesChart(store);
   const trend = getWeeklyTrend(store);
   const distribution = getDistribution(store);
@@ -61,6 +63,15 @@ function StatsPage() {
       </div>
 
       <div className="mt-5 grid gap-4 sm:mt-6 sm:gap-6 lg:grid-cols-2">
+        {!hydrated ? (
+          <>
+            <ChartPlaceholder title="Minutos por día" />
+            <ChartPlaceholder title="Enfoque semanal" />
+            <ChartPlaceholder title="Distribución del tiempo" tall />
+            <ChartPlaceholder title="Hábitos logrados" tall />
+          </>
+        ) : (
+          <>
         <ChartCard title="Minutos por día">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={weekly}>
@@ -127,8 +138,19 @@ function StatsPage() {
             })}
           </ul>
         </div>
+          </>
+        )}
       </div>
     </Shell>
+  );
+}
+
+function ChartPlaceholder({ title, tall }) {
+  return (
+    <div className="glass rounded-2xl card-padding sm:rounded-3xl">
+      <h2 className="mb-3 font-display text-lg sm:mb-4 sm:text-xl">{title}</h2>
+      <div className={`${tall ? "h-[200px] sm:h-[240px]" : "h-[200px] sm:h-[240px]"} animate-pulse rounded-2xl bg-white/50`} />
+    </div>
   );
 }
 

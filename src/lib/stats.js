@@ -6,7 +6,7 @@ function dateKey(d = new Date()) {
 
 function addDays(d, n) {
   const x = new Date(d);
-  x.setDate(x.getDate() + n);
+  x.setUTCDate(x.getUTCDate() + n);
   return x;
 }
 
@@ -34,7 +34,7 @@ export function getWeeklyMinutesChart(store) {
     const d = addDays(today, i - 6);
     const key = dateKey(d);
     return {
-      day: DAY_LABELS[d.getDay()],
+      day: DAY_LABELS[d.getUTCDay()],
       min: store.dailyMinutes[key] || 0,
     };
   });
