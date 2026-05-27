@@ -3,7 +3,10 @@ import path from "node:path";
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 import { nitro } from "nitro/vite";
 
-const isVercel = !!process.env.VERCEL;
+const isVercel =
+  process.env.VERCEL === "1" ||
+  !!process.env.VERCEL_ENV ||
+  process.env.NITRO_PRESET === "vercel";
 
 const ROUTE_TREE = path.resolve("src/routeTree.gen.js");
 
@@ -75,7 +78,11 @@ export default defineConfig({
       },
     },
   },
-  plugins: [stripRouteTreeTypes(), copyPublicToClient(), ...(isVercel ? [nitro()] : [])],
+  plugins: [
+    stripRouteTreeTypes(),
+    copyPublicToClient(),
+    ...(isVercel ? [nitro({ preset: "vercel" })] : []),
+  ],
   tanstackStart: {
     server: { entry: "server" },
     router: {
