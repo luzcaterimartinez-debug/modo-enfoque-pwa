@@ -3,6 +3,7 @@ import { Home, Timer, Target, ShieldOff, BarChart3, Gift } from "lucide-react";
 import { useEffect, useState } from "react";
 import { finishExpiredDetox, useStore } from "@/lib/store";
 import { notifyDetoxNavBlocked } from "@/components/DetoxRouteGuard";
+import { PwaInstallButton } from "@/components/PwaInstallButton";
 
 const nav = [
   { to: "/", label: "Inicio", icon: Home },
@@ -88,7 +89,7 @@ export function Shell({ children }) {
       )}
 
       <div className="relative z-10 mx-auto flex min-h-screen min-h-dvh max-w-7xl flex-col gap-4 px-3 pb-[calc(5.75rem+env(safe-area-inset-bottom,0px))] pt-3 sm:gap-6 sm:px-4 sm:pb-4 sm:pt-4 md:flex-row md:p-8 md:pb-8">
-        <header className="flex items-center justify-between md:hidden">
+        <header className="flex items-center justify-between gap-2 md:hidden">
           {isLocked("/") ? (
             <button type="button" onClick={notifyDetoxNavBlocked} className="flex items-center gap-2.5 opacity-60">
               <div className="grid h-9 w-9 place-items-center rounded-xl bg-primary font-display text-lg text-primary-foreground">
@@ -110,6 +111,7 @@ export function Shell({ children }) {
               </div>
             </Link>
           )}
+          <PwaInstallButton variant="sidebar" className="!w-auto shrink-0 !px-3 !py-2 !text-xs sm:!px-4" />
         </header>
 
         <aside className="glass sticky top-8 hidden h-[calc(100vh-4rem)] w-64 shrink-0 flex-col rounded-3xl p-6 md:flex">
@@ -151,8 +153,11 @@ export function Shell({ children }) {
             ))}
           </nav>
 
-          <div className="mt-auto rounded-2xl bg-butter/60 p-4 text-xs text-foreground/70">
-            {detoxActive ? "Reto en curso — navegación bloqueada." : '"La disciplina vale más que la motivación."'}
+          <div className="mt-auto space-y-3">
+            <PwaInstallButton variant="sidebar" />
+            <div className="rounded-2xl bg-butter/60 p-4 text-xs text-foreground/70">
+              {detoxActive ? "Reto en curso — navegación bloqueada." : '"La disciplina vale más que la motivación."'}
+            </div>
           </div>
         </aside>
 

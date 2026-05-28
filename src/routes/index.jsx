@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Shell } from "@/components/Shell";
 import { Timer, ShieldOff, BarChart3, Gift, ArrowRight, Sparkles, Flame, Target } from "lucide-react";
+import { PwaInstallButton } from "@/components/PwaInstallButton";
 import { getDailyChallenge } from "@/lib/challenges";
 import { useStore } from "@/lib/store";
 import { getTodayMinutes, getMinutesDelta, isDailyChallengeBonusAvailable } from "@/lib/stats";
@@ -28,13 +29,16 @@ function Dashboard() {
           <p className="page-subtitle">Hola, estudiante</p>
           <h1 className="page-title mt-2">Hoy es un buen día para enfocarse.</h1>
         </div>
-        <Link
-          to="/timer"
-          className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-foreground px-6 py-3.5 text-background shadow-xl transition-transform active:scale-[0.98] sm:w-auto sm:py-3 sm:hover:scale-105"
-        >
-          Iniciar sesión
-          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-        </Link>
+        <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
+          <PwaInstallButton />
+          <Link
+            to="/timer"
+            className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-foreground px-6 py-3.5 text-background shadow-xl transition-transform active:scale-[0.98] sm:w-auto sm:py-3 sm:hover:scale-105"
+          >
+            Iniciar sesión
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </Link>
+        </div>
       </header>
 
       <section className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3">
