@@ -26,8 +26,13 @@ function Dashboard() {
     <Shell>
       <header className="mb-5 flex flex-col gap-4 sm:mb-8 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
         <div className="min-w-0">
-          <p className="page-subtitle">Hola, estudiante</p>
-          <h1 className="page-title mt-2">Hoy es un buen día para enfocarse.</h1>
+          <p className="page-subtitle">Bienvenido</p>
+          <h1 className="page-title mt-2">
+            Mejora tu <span className="text-primary">productividad</span> y bienestar cada día.
+          </h1>
+          <p className="mt-3 max-w-xl text-sm text-muted-foreground">
+            Organiza tu tiempo, alcanza tus metas y mantén el equilibrio con tecnología consciente.
+          </p>
         </div>
         <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
           <PwaInstallButton />
@@ -56,15 +61,15 @@ function Dashboard() {
       <section className="mt-5 grid gap-3 sm:mt-6 sm:gap-4 md:grid-cols-2">
         <Link
           to="/timer"
-          className="group relative overflow-hidden rounded-3xl bg-foreground p-5 text-background sm:p-8"
+          className="group relative overflow-hidden rounded-3xl border border-primary/25 bg-[oklch(0.18_0.06_255/0.8)] p-5 shadow-[0_0_40px_oklch(0.78_0.16_220/0.15)] sm:p-8"
         >
-          <div className="absolute -right-10 -top-10 h-48 w-48 rounded-full bg-peach/40 blur-2xl" />
-          <Timer className="h-7 w-7 sm:h-8 sm:w-8" />
-          <h2 className="mt-4 font-display text-2xl sm:mt-6 sm:text-3xl">Pantalla de Enfoque</h2>
-          <p className="mt-2 max-w-sm text-sm text-background/70">
+          <div className="absolute -right-10 -top-10 h-48 w-48 rounded-full bg-primary/25 blur-2xl" />
+          <Timer className="h-7 w-7 text-primary sm:h-8 sm:w-8" />
+          <h2 className="mt-4 font-display text-2xl text-white sm:mt-6 sm:text-3xl">Pantalla de Enfoque</h2>
+          <p className="mt-2 max-w-sm text-sm text-muted-foreground">
             Pomodoro con minijuegos para mantener tu mente activa entre bloques.
           </p>
-          <span className="mt-5 inline-flex items-center gap-2 text-sm sm:mt-6">
+          <span className="mt-5 inline-flex items-center gap-2 text-sm text-primary sm:mt-6">
             Entrar <ArrowRight className="h-4 w-4" />
           </span>
         </Link>
@@ -91,7 +96,7 @@ function Dashboard() {
 
       <Link
         to="/challenges"
-        className="glass mt-5 flex items-start gap-3 rounded-3xl p-4 transition active:scale-[0.99] sm:mt-6 sm:items-center sm:gap-4 sm:p-6 sm:hover:bg-white/80"
+        className="glass mt-5 flex items-start gap-3 rounded-3xl p-4 transition active:scale-[0.99] sm:mt-6 sm:items-center sm:gap-4 sm:p-6 sm:hover:border-primary/30"
       >
         <Sparkles className="mt-0.5 h-5 w-5 shrink-0 text-primary sm:mt-0 sm:h-6 sm:w-6" />
         <div className="min-w-0 flex-1 text-sm text-foreground/80">
@@ -116,7 +121,7 @@ function StatCard({ label, value, sub, subIcon: SubIcon, color }) {
     <div className="relative overflow-hidden rounded-2xl bg-card p-4 shadow-sm sm:rounded-3xl sm:p-6">
       <div
         className="absolute -right-6 -top-6 h-20 w-20 rounded-full sm:h-24 sm:w-24"
-        style={{ background: color, opacity: 0.6 }}
+        style={{ background: color, opacity: 0.35 }}
       />
       <p className="text-[10px] uppercase tracking-widest text-muted-foreground sm:text-xs">{label}</p>
       <p className="mt-1.5 font-display text-3xl sm:mt-2 sm:text-5xl">{value}</p>
@@ -135,10 +140,10 @@ function ActionCard({ to, icon: Icon, title, desc, bg }) {
       className="group flex items-center gap-3 rounded-2xl bg-card p-4 shadow-sm transition-all active:scale-[0.99] sm:gap-4 sm:rounded-3xl sm:p-5 sm:hover:-translate-y-0.5 sm:hover:shadow-lg"
     >
       <div
-        className="grid h-12 w-12 shrink-0 place-items-center rounded-xl sm:h-14 sm:w-14 sm:rounded-2xl"
-        style={{ background: bg }}
+        className="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-primary/20 shadow-[0_0_16px_oklch(0.78_0.16_220/0.2)] sm:h-14 sm:w-14 sm:rounded-2xl"
+        style={{ background: `color-mix(in oklab, ${bg} 25%, transparent)` }}
       >
-        <Icon className="h-5 w-5 text-foreground sm:h-6 sm:w-6" />
+        <Icon className="h-5 w-5 text-primary sm:h-6 sm:w-6" />
       </div>
       <div className="min-w-0 flex-1">
         <div className="text-sm font-semibold sm:text-base">{title}</div>

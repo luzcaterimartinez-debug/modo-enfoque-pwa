@@ -5,6 +5,7 @@ import {
   CHALLENGES,
   CHALLENGE_CATEGORIES,
   formatDuration,
+  formatCountdown,
   getChallenge,
 } from "@/lib/challenges";
 import {
@@ -133,8 +134,7 @@ function ChallengesPage() {
     setNow(Date.now());
   };
 
-  const mm = String(Math.floor(remaining / 60000)).padStart(2, "0");
-  const ss = String(Math.floor((remaining % 60000) / 1000)).padStart(2, "0");
+  const countdown = formatCountdown(remaining);
   const progress = active?.durationSec ? getDetoxProgress(store.activeDetox, active.durationSec, now) : 0;
 
   return (
@@ -211,8 +211,8 @@ function ChallengesPage() {
                 />
               </svg>
               <div className="text-center">
-                <div className="font-display text-5xl tabular-nums sm:text-6xl">
-                  {mm}:{ss}
+                <div className="font-display text-4xl tabular-nums sm:text-5xl">
+                  {countdown}
                 </div>
                 <p className="mt-1 text-[10px] uppercase tracking-widest text-muted-foreground sm:text-xs">
                   {paused ? "Vuelve aquí" : "Deja el celular"}
@@ -273,9 +273,9 @@ function ChallengesPage() {
 
       {confirmId &&
         (() => {
-          const c = getChallenge(confirmId);
-          if (!c) return null;
-          return (
+        const c = getChallenge(confirmId);
+        if (!c) return null;
+        return (
             <div className="fixed inset-0 z-50 flex items-end justify-center bg-foreground/30 p-3 backdrop-blur-sm sm:items-center">
               <div className="glass w-full max-w-md rounded-2xl p-5 sm:rounded-3xl sm:p-6">
                 <h3 className="font-display text-xl">{c.name}</h3>

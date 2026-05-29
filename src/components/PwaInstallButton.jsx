@@ -32,7 +32,7 @@ export function PwaInstallButton({ variant = "primary", className = "" }) {
 
       {iosHelp && (
         <div
-          className="fixed inset-0 z-[200] flex items-end justify-center bg-foreground/30 p-3 backdrop-blur-sm sm:items-center"
+          className="fixed inset-0 z-[200] flex items-end justify-center bg-[oklch(0.08_0.04_260/0.75)] p-3 backdrop-blur-sm sm:items-center"
           role="dialog"
           aria-modal="true"
           aria-labelledby="pwa-ios-title"
@@ -53,7 +53,7 @@ export function PwaInstallButton({ variant = "primary", className = "" }) {
                 type="button"
                 onClick={() => setIosHelp(false)}
                 aria-label="Cerrar"
-                className="touch-target shrink-0 rounded-full bg-white/70 p-2"
+                className="touch-target shrink-0 rounded-full border border-primary/20 bg-primary/10 p-2"
               >
                 <X className="h-4 w-4" />
               </button>
