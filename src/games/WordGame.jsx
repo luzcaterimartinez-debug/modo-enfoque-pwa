@@ -2,15 +2,24 @@ import { useState } from "react";
 import { addGameScore } from "@/lib/store";
 
 const WORDS = [
-  { scrambled: "DIESTRO", answer: "ESTUDIO" },
+  { scrambled: "UDOESTI", answer: "ESTUDIO" },
   { scrambled: "QUEONFE", answer: "ENFOQUE" },
   { scrambled: "PEMTOI", answer: "TIEMPO" },
   { scrambled: "TEMNE", answer: "MENTE" },
   { scrambled: "BROLI", answer: "LIBRO" },
   { scrambled: "CINOCANTRECON", answer: "CONCENTRACION" },
-  { scrambled: "TALMEA", answer: "METAL" },
+  { scrambled: "LAMET", answer: "METAL" },
   { scrambled: "PRENRADE", answer: "APRENDER" },
 ];
+
+function assertAnagram(scrambled, answer) {
+  const norm = (s) => s.toUpperCase().split("").sort().join("");
+  if (norm(scrambled) !== norm(answer)) {
+    throw new Error(`Anagrama inválido: ${scrambled} → ${answer}`);
+  }
+}
+
+WORDS.forEach(({ scrambled, answer }) => assertAnagram(scrambled, answer));
 
 export function WordGame() {
   const [i, setI] = useState(0);
